@@ -20,9 +20,16 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 })
 
+/**
+ * the main game "loop", called when the script is first loaded
+ * and after the user's answer has been processed
+ */
 function runGame() {
-
+    //generate two random whole numbers rounded down to the nearest integer
+    let num1 = Math.floor(Math.random() * 25) + 1;   // +1 stops the rounding down process for excluding 24
+    let num2 = Math.floor(Math.random() * 25) + 1;
 }
+
 
 function checkAnswer() {
 
