@@ -11,23 +11,32 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let button of buttons) {                       // more modern version of ----> for (let i = 0; i < buttons.length; i++)  
         button.addEventListener("click", function() {
             if (this.getAttribute("data-type") === "submit") {         //narrows down what was clicked, theres is only 1 submit
-                alert("You clicked Submit"); 
+                alert("You clicked Submit!"); 
             } else {
                 let gameType = this.getAttribute("data-type");      
-                alert(`You clicked ${gameType}`);                    //but there are 4 game type each with their own gameType/dataType
-            }                                                        //DON'T FORGOT TEMPLATE LITERAL BACK TICKS!!!!
-     })
+                runGame(gameType);                  
+            }                                                        //but there are 4 game type each with their own gameType/dataType
+     });
   }
-})
+  runGame("addition");                                      // sets default game, runs as soon as the DOM is loaded
+
+});
 
 /**
  * the main game "loop", called when the script is first loaded
  * and after the user's answer has been processed
  */
-function runGame() {
-    //generate two random whole numbers rounded down to the nearest integer
-    let num1 = Math.floor(Math.random() * 25) + 1;   // +1 stops the rounding down process for excluding 24
-    let num2 = Math.floor(Math.random() * 25) + 1;
+function runGame(gameType) {             // pass gametype into function as argument
+    
+    let num1 = Math.floor(Math.random() * 25) + 1;    //generate two random whole numbers rounded down to the nearest integer
+    let num2 = Math.floor(Math.random() * 25) + 1;    // +1 stops the rounding down process for excluding 24
+    
+    if (gameType === "addition") {                      //check game type parameter
+        displayAdditionQuestion(num1, num2);
+    } else {
+        alert(`Unknown game type: ${gameType}`);
+        throw `Unknown game type: ${gameType}. Aborting!`;    //stop game from running and print message to console for debugging
+    }
 }
 
 
@@ -47,9 +56,12 @@ function incrementWrongAnswer() {
 
 }
 
-function displayAdditionQuestion() {
-
+function displayAdditionQuestion(operand1, operand2) {
+    document.getElementById('operand1').textContent = operand1;  //sets text content to num 1 from rungame if block
+    document.getElementById('operand2').textContent = operand2;  //sets text content to num 2 from rungame if block
+    document.getElementById('operator').textContent = "+";
 }
+
 
 function displaySubtractQuestion() {
     
