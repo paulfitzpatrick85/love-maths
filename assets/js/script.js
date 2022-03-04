@@ -41,10 +41,27 @@ function runGame(gameType) {             // pass gametype into function as argum
 
 
 function checkAnswer() {
-
+ operand1
 }
-
+/**
+ * gets the operands (the numbers) and the operator (plus, minus etc)
+ * directly from the dom, and returns the correct answer
+ */
+//read values from the dom and store them in variables
 function calculateCorrectAnswer() {
+    //parseInt returns value from dom as number instead of string
+    let operand1 = parseInt(document.getElementById('operand1').innerText);  //get value of operand1 from html
+    let operand2 = parseInt(document.getElementById('operand2').innerText);
+    let operator = document.getElementById('operator').innerText;
+    //determine game type by operator
+
+    if (operator === "+") {
+        return [operand1 + operand2, "addition"];
+    } else {
+        alert(`Unimplemented operator ${operator}`);
+        throw `Unimplemented operator ${operator}. Aborting`;
+    }
+
 
 }
 
@@ -70,8 +87,3 @@ function displaySubtractQuestion() {
 function displayMultiplyQuestion() {
     
 }
-
-function displayAdditionQuestion() {
-    
-}
-
