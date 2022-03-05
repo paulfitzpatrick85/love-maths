@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
+
 /**
  * the main game "loop", called when the script is first loaded
  * and after the user's answer has been processed
@@ -32,7 +33,9 @@ function runGame(gameType) {             // pass gametype into function as argum
     let num2 = Math.floor(Math.random() * 25) + 1;    // +1 stops the rounding down process for excluding 24
     
     if (gameType === "addition") {                      //check game type parameter
-        displayAdditionQuestion(num1, num2);
+        displayAdditionQuestion(num1, num2);             // then go to this function based on above parameter
+    } else if (gameType === "multiply") {
+        displayMultiplyQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aborting!`;    //stop game from running and print message to console for debugging
@@ -53,7 +56,9 @@ function checkAnswer() {
      incrementWrongAnswer();
  }
 runGame(calculatedAnswer[1]);      //since calculateCorrectAnswer returns an array and is now set to calculatedAnwser (in function above), the array comes with it, and as in the example the second index was addition
-}                                                                            
+}                                                               
+
+
 /**
  * gets the operands (the numbers) and the operator (plus, minus etc)
  * directly from the dom, and returns the correct answer
@@ -64,10 +69,12 @@ function calculateCorrectAnswer() {
     let operand1 = parseInt(document.getElementById('operand1').innerText);  //gets value of operand1 from html (which is created by the random numner function)
     let operand2 = parseInt(document.getElementById('operand2').innerText);
     let operator = document.getElementById('operator').innerText;
-    //determine game type by operator
-
+    
+    //determine game type by operator   
     if (operator === "+") {
         return [operand1 + operand2, "addition"];       //value returned but displayed in function above when called
+    } else if (operator === "x") {
+        return [operand1 * operand2, "multiply"];
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}. Aborting`;
@@ -75,6 +82,8 @@ function calculateCorrectAnswer() {
 
 
 }
+
+
 /**
  * Gets the current score from the DOM and increments it by 1
  */
@@ -88,7 +97,7 @@ function incrementScore() {
  */
 function incrementWrongAnswer() {
     let oldScore = parseInt(document.getElementById("incorrect").innerText); // 
-     document.getElementById("incorrect").innerText = ++oldScore;    
+     document.getElementById("incorrect").innerText = ++oldScore;    // ++'oldScore and variable oldScore don't have to the same name'
 
 }
 
@@ -103,6 +112,8 @@ function displaySubtractQuestion() {
     
 }
 
-function displayMultiplyQuestion() {
-    
+function displayMultiplyQuestion(operand1, operand2) {
+    document.getElementById('operand1').textContent = operand1;  //sets text content to num 1 from rungame if block
+    document.getElementById('operand2').textContent = operand2;  //sets text content to num 2 from rungame if block
+    document.getElementById('operator').textContent = "x";
 }
