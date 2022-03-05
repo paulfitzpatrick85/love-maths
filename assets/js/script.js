@@ -36,6 +36,8 @@ function runGame(gameType) {             // pass gametype into function as argum
         displayAdditionQuestion(num1, num2);             // then go to this function based on above parameter
     } else if (gameType === "multiply") {
         displayMultiplyQuestion(num1, num2);
+    } else if (gameType === "subtract") {
+        displaySubtractQuestion(num1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aborting!`;    //stop game from running and print message to console for debugging
@@ -75,6 +77,8 @@ function calculateCorrectAnswer() {
         return [operand1 + operand2, "addition"];       //value returned but displayed in function above when called
     } else if (operator === "x") {
         return [operand1 * operand2, "multiply"];
+    } else if (operator === "-") {
+        return [operand1 - operand2, "subtract"];
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}. Aborting`;
@@ -108,12 +112,14 @@ function displayAdditionQuestion(operand1, operand2) {
 }
 
 
-function displaySubtractQuestion() {
-    
+function displaySubtractQuestion(operand1, operand2) {
+    document.getElementById('operand1').textContent = operand1 > operand2 ? operand1 : operand2; //ternary if statement, asks is the operand1 bigger than operand 2, if true returns op1 or else(the ":" part, returns op2)
+    document.getElementById('operand2').textContent = operand1 > operand2 ? operand2 : operand1; // if op1 is largest display op2 as second number. ternary if-->  condition? true part : false part
+    document.getElementById('operator').textContent = "-";
 }
 
 function displayMultiplyQuestion(operand1, operand2) {
-    document.getElementById('operand1').textContent = operand1;  //sets text content to num 1 from rungame if block
-    document.getElementById('operand2').textContent = operand2;  //sets text content to num 2 from rungame if block
+    document.getElementById('operand1').textContent = operand1;  
+    document.getElementById('operand2').textContent = operand2;  
     document.getElementById('operator').textContent = "x";
 }
