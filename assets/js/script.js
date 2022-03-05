@@ -8,13 +8,13 @@ document.addEventListener("DOMContentLoaded", function() {
     // Iterates through buttons to establishe which game type the user has clicked
     // Is this case "this" refers to whatever button was just clicked, then calls "get attribute" function/method
 
-    for (let button of buttons) {                       // more modern version of ----> for (let i = 0; i < buttons.length; i++)  
+    for (let button of buttons) {        //---------------------- more modern version of ----> for (let i = 0; i < buttons.length; i++)  
         button.addEventListener("click", function() {
-            if (this.getAttribute("data-type") === "submit") {         //narrows down what was clicked, theres is only 1 submit
-                alert("You clicked Submit!"); 
-            } else {
-                let gameType = this.getAttribute("data-type");      
-                runGame(gameType);                  
+            if (this.getAttribute("data-type") === "submit") {         //narrows down what was clicked, theres is only 1 submit ///////
+                checkAnswer();                                   // set this to an alert starting off to check js is working      //
+            } else {                                                                                                                //
+                let gameType = this.getAttribute("data-type");                                                                      //
+                runGame(gameType);                                // set this to an alert starting off to check js is working       //
             }                                                        //but there are 4 game type each with their own gameType/dataType
      });
   }
@@ -41,22 +41,31 @@ function runGame(gameType) {             // pass gametype into function as argum
 
 
 function checkAnswer() {
- operand1
-}
+ let userAnswer = parseInt(document.getElementById("answer-box").value);    //value is used as it is getting a user's input as opposed to .innerText which returns something that was previously set  
+ let calculatedAnswer = calculateCorrectAnswer();               //  calculateCorrectAnswer is the correct answer, it is then stored in calculatedAnwser to be used
+ let isCorrect = userAnswer === calculatedAnswer[0];     //index is used because, in consoled example, a array is returned [answer, addition(or whatever the game is)]
+
+ if (isCorrect) {
+     alert("Hey! You got it right! :D");
+ } else {
+     alert(`Aww....you answeered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`)
+ }
+runGame(calculatedAnswer[1]);      //since calculateCorrectAnswer returns an array and is now set to calculatedAnwser (in function above), the array comes with it, and as in the example the second index was addition
+}                                                                            
 /**
  * gets the operands (the numbers) and the operator (plus, minus etc)
  * directly from the dom, and returns the correct answer
  */
-//read values from the dom and store them in variables
+//function to read values from the dom and store them in variables
 function calculateCorrectAnswer() {
-    //parseInt returns value from dom as number instead of string
-    let operand1 = parseInt(document.getElementById('operand1').innerText);  //get value of operand1 from html
+    //parseInt returns value from dom (in this case the 'innerText' of the operand elements) as a number instead of string
+    let operand1 = parseInt(document.getElementById('operand1').innerText);  //gets value of operand1 from html (which is created by the random numner function)
     let operand2 = parseInt(document.getElementById('operand2').innerText);
     let operator = document.getElementById('operator').innerText;
     //determine game type by operator
 
     if (operator === "+") {
-        return [operand1 + operand2, "addition"];
+        return [operand1 + operand2, "addition"];       //value returned but displayed in function above when called
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}. Aborting`;
