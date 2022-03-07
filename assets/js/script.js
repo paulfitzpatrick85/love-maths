@@ -18,7 +18,15 @@ document.addEventListener("DOMContentLoaded", function() {
             }                                                        //but there are 4 game type each with their own gameType/dataType
      });
   }
-  runGame("addition");                                      // sets default game, runs as soon as the DOM is loaded
+
+  // allow user to use ENTER key to submit answer instead of mouse click
+  document.getElementById("answer-box").addEventListener("keydown", function(event) {     //listen for key press
+      if (event.key === "Enter") {                                                        //If event(keypress) is enter key, 
+          checkAnswer();                                                               //Then run checkAnswer function
+      }
+  })
+
+  runGame("addition");     // sets default game, runs as soon as the DOM is loaded
 
 });
 
@@ -29,6 +37,9 @@ document.addEventListener("DOMContentLoaded", function() {
  */
 function runGame(gameType) {             // pass gametype into function as argument
     
+    document.getElementById("answer-box").value = "";   // set value of answer box to an empty string, so it clears when the runGame function is called after each game 
+    document.getElementById("answer-box").focus(); //each time runGame is called, the answer box will gain focus, saving userr from having to clcik into the box manually
+
     let num1 = Math.floor(Math.random() * 25) + 1;    //generate two random whole numbers rounded down to the nearest integer
     let num2 = Math.floor(Math.random() * 25) + 1;    // +1 stops the rounding down process for excluding 24
     
