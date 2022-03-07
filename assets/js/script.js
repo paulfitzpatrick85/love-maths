@@ -42,6 +42,7 @@ function runGame(gameType) {             // pass gametype into function as argum
 
     let num1 = Math.floor(Math.random() * 25) + 1;    //generate two random whole numbers rounded down to the nearest integer
     let num2 = Math.floor(Math.random() * 25) + 1;    // +1 stops the rounding down process for excluding 24
+    let divisionNum1 = num1 * num2;
     
     if (gameType === "addition") {                      //check game type parameter
         displayAdditionQuestion(num1, num2);             // then go to this function based on above parameter
@@ -49,6 +50,8 @@ function runGame(gameType) {             // pass gametype into function as argum
         displayMultiplyQuestion(num1, num2);
     } else if (gameType === "subtract") {
         displaySubtractQuestion(num1, num2);
+    } else if (gameType === "division") {
+        displayDivisionQuestion(divisionNum1, num2);
     } else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aborting!`;    //stop game from running and print message to console for debugging
@@ -90,7 +93,9 @@ function calculateCorrectAnswer() {
         return [operand1 * operand2, "multiply"];
     } else if (operator === "-") {
         return [operand1 - operand2, "subtract"];
-    } else {
+    } else if (operator === "/") {
+        return [operand1 / operand2, "division"];
+     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}. Aborting`;
     }
@@ -133,4 +138,10 @@ function displayMultiplyQuestion(operand1, operand2) {
     document.getElementById('operand1').textContent = operand1;  
     document.getElementById('operand2').textContent = operand2;  
     document.getElementById('operator').textContent = "x";
+}
+
+function displayDivisionQuestion(operand1, operand2) {
+    document.getElementById('operand1').textContent = operand1 > operand2 ? operand1 : operand2; //ternary if statement, asks is the operand1 bigger than operand 2, if true returns op1 or else(the ":" part, returns op2)
+    document.getElementById('operand2').textContent = operand1 > operand2 ? operand2 : operand1; // if op1 is largest display op2 as second number. ternary if-->  condition? true part : false part
+    document.getElementById('operator').textContent = "/";
 }
